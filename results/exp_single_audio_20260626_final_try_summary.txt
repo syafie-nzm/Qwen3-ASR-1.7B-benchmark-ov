@@ -1,0 +1,8 @@
+run_label: exp_single_audio_20260626_final_try
+baseline_normalized_wer: 1.5075
+best_version: v0_lexicon_sequence
+best_normalized_wer: 0.5025
+delta_vs_baseline: -1.0050
+target_delta: +5.0000
+met_target: True
+executed_iterations: 1

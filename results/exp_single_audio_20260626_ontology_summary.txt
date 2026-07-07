@@ -1,0 +1,8 @@
+run_label: exp_single_audio_20260626_ontology
+baseline_normalized_wer: 1.5075
+best_version: v5_balanced_hybrid
+best_normalized_wer: 9.5477
+delta_vs_baseline: +8.0402
+target_delta: +5.0000
+met_target: False
+executed_iterations: 5

@@ -1,0 +1,187 @@
+timestamp_utc: 2026-06-26T11:25:09+00:00
+run_label: exp_single_audio_20260626
+version: baseline_truth_context
+type: baseline_reference
+rationale: Reference-only upper bound using transcript-leaking context.
+prompt:
+Insertion level, Terminal ileum, Cecum, Ascending colon, Hepatic flexure, Transverse colon, Splenic flexure, Descending colon, Sigmoid Colon, Rectum, Anastomosis, Anus, Premedication, Colon cleansing agent, Preparation time, Morning single dose, Evening single dose, Split dose, Colon cleansing level, Excellent, Good, Fail, Poor finding, A, normal, Negative finding, Negative finding in the observable segment, Poor preparation, B, Hemorrhoids, External Hemorrhoids, Mixed hemorrhoids, Internal hemorrhoids, C, polyp, Hyperplastic polyp, Tubular adenoma, Tubulovillous adenoma, Villous adenoma, Sessile serrated lesion, SSL, Traditional serrated adenoma, Post-treatment residual neoplasm, Inflammatory polyp, Juvenile polyp, Peutz-Jeghers syndrome, Colon polyposis, familiar, Colon polyposis, Early colorectal cancer, Advanced colorectal cancer, Lymphangioma, Lipoma, Carcinoid, Submucosal tumor, Colonmaltoma, Lymphoma, Colitis, Non-specific colitis, Ischemic colitis, Infectious colitis, Amebic colitis, Ulcerative colitis, Radiation colitis, Pseudo-membranous colitis, Drug induced colitis, Cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, Colonic ulcer, Bechet's disease, Proctitis, Hemorrhagic colitis, Colitis aphthosa, Colonic diverticulum, Chronic diverticulosis, Melanosis coloi, Xanthoma, Post partial colectomy, Post left hemicolectomy, Post right hemicolectomy, Situs inversus, Colonic wall cyst, Angiodysplasia, Angiectasia, Lymphoid follicles, Operation scar, Suture granuloma, Petechia, Colonic tuberculosis, Amyloidosis, Mega colon, Rectal varices, Mucosal prolapse, Intussusception, Colon fistula, Post endoscopy treatment scar, Colonic stricture, Rectosigmoid junction RSJ
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:25:44+00:00
+run_label: exp_single_audio_20260626
+version: v1_compact_terms
+type: candidate
+rationale: Neutral instruction with compact high-value GI term list.
+prompt:
+You are transcribing colonoscopy/endoscopy dictation. Prefer medically plausible terms from this domain: terminal ileum, cecum, ascending colon, hepatic flexure, transverse colon, splenic flexure, descending colon, sigmoid colon, rectum, anastomosis, hemorrhoids, polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion, inflammatory polyp, colitis, diverticulum, angiodysplasia, stricture, rectosigmoid junction.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:26:20+00:00
+run_label: exp_single_audio_20260626
+version: v2_structured_vocab
+type: candidate
+rationale: Structured terminology by anatomy/findings/pathology.
+prompt:
+Transcribe medical speech for lower GI endoscopy. Use terminology by category. Anatomy: terminal ileum, cecum, ascending colon, transverse colon, descending colon, sigmoid colon, rectum, anus, rectosigmoid junction. Findings: hemorrhoids, polyps, diverticulum, ulcers, strictures, angiodysplasia, lymphoid follicles. Pathology labels: hyperplastic polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion, inflammatory polyp, ulcerative colitis, ischemic colitis, infectious colitis, Crohn's disease.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:26:55+00:00
+run_label: exp_single_audio_20260626
+version: v3_disambiguation
+type: candidate
+rationale: Adds disambiguation hints for commonly confused clinical words.
+prompt:
+Transcribe with medical disambiguation for GI terms. Keep likely clinical spellings when acoustically close: ileum (not ilium), cecum, sigmoid, anastomosis, hemorrhoids, sessile serrated lesion, cytomegalovirus colitis, pseudo-membranous colitis, angiodysplasia, intussusception. Preserve multi-word disease names and avoid replacing them with generic words.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:27:31+00:00
+run_label: exp_single_audio_20260626
+version: v4_style_constraints
+type: candidate
+rationale: Style constraints to reduce paraphrase drift.
+prompt:
+Generate faithful ASR text for endoscopy terminology. Keep medical nouns exact when possible, preserve compound terms, avoid unnecessary paraphrasing, and keep list-like dictated findings in order. Prefer concise literal transcription over interpretation.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:27:58+00:00
+run_label: exp_single_audio_20260626
+version: v5_balanced_hybrid
+type: candidate
+rationale: Hybrid of vocabulary guidance, disambiguation, and literal style.
+prompt:
+Transcribe lower GI endoscopy dictation faithfully. Prioritize exact clinical terms and list order. Key vocabulary includes terminal ileum, cecum, colon segments, rectum, anastomosis, hemorrhoids, polyp subtypes (hyperplastic, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion), colitis subtypes, diverticulum, angiodysplasia, strictures, and rectosigmoid junction. Use medical spellings when uncertain.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:29:25+00:00
+run_label: exp_single_audio_20260626_tuned
+version: baseline_truth_context
+type: baseline_reference
+rationale: Reference-only upper bound using transcript-leaking context.
+prompt:
+Insertion level, Terminal ileum, Cecum, Ascending colon, Hepatic flexure, Transverse colon, Splenic flexure, Descending colon, Sigmoid Colon, Rectum, Anastomosis, Anus, Premedication, Colon cleansing agent, Preparation time, Morning single dose, Evening single dose, Split dose, Colon cleansing level, Excellent, Good, Fail, Poor finding, A, normal, Negative finding, Negative finding in the observable segment, Poor preparation, B, Hemorrhoids, External Hemorrhoids, Mixed hemorrhoids, Internal hemorrhoids, C, polyp, Hyperplastic polyp, Tubular adenoma, Tubulovillous adenoma, Villous adenoma, Sessile serrated lesion, SSL, Traditional serrated adenoma, Post-treatment residual neoplasm, Inflammatory polyp, Juvenile polyp, Peutz-Jeghers syndrome, Colon polyposis, familiar, Colon polyposis, Early colorectal cancer, Advanced colorectal cancer, Lymphangioma, Lipoma, Carcinoid, Submucosal tumor, Colonmaltoma, Lymphoma, Colitis, Non-specific colitis, Ischemic colitis, Infectious colitis, Amebic colitis, Ulcerative colitis, Radiation colitis, Pseudo-membranous colitis, Drug induced colitis, Cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, Colonic ulcer, Bechet's disease, Proctitis, Hemorrhagic colitis, Colitis aphthosa, Colonic diverticulum, Chronic diverticulosis, Melanosis coloi, Xanthoma, Post partial colectomy, Post left hemicolectomy, Post right hemicolectomy, Situs inversus, Colonic wall cyst, Angiodysplasia, Angiectasia, Lymphoid follicles, Operation scar, Suture granuloma, Petechia, Colonic tuberculosis, Amyloidosis, Mega colon, Rectal varices, Mucosal prolapse, Intussusception, Colon fistula, Post endoscopy treatment scar, Colonic stricture, Rectosigmoid junction RSJ
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:29:48+00:00
+run_label: exp_single_audio_20260626_tuned
+version: v1_structured_core
+type: candidate
+rationale: Structured core anatomy/findings vocabulary.
+prompt:
+Task: transcribe lower GI endoscopy dictation literally. Preferred anatomy terms: terminal ileum, cecum, ascending colon, hepatic flexure, transverse colon, splenic flexure, descending colon, sigmoid colon, rectum, anus, anastomosis, rectosigmoid junction (RSJ). Preferred finding terms: hemorrhoids (external, internal, mixed), polyp, hyperplastic polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion (SSL), traditional serrated adenoma, inflammatory polyp, juvenile polyp, diverticulum, angiodysplasia, angiectasia, stricture.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:30:08+00:00
+run_label: exp_single_audio_20260626_tuned
+version: v2_inflammation_pathology
+type: candidate
+rationale: Pathology-heavy prompt with exact disease labels.
+prompt:
+Transcribe medical speech for colonoscopy reports. Prefer exact disease labels when heard: non-specific colitis, ischemic colitis, infectious colitis, amebic colitis, ulcerative colitis, radiation colitis, pseudo-membranous colitis, drug induced colitis, cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, proctitis, hemorrhagic colitis, colitis aphthosa, colonic ulcer, colonic tuberculosis, amyloidosis. Keep multi-word disease names intact.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:30:30+00:00
+run_label: exp_single_audio_20260626_tuned
+version: v3_disambiguation_rules
+type: candidate
+rationale: Explicit disambiguation and anti-synonym substitutions.
+prompt:
+Disambiguation rules for ASR: use ileum (not ilium), cecum (not secum), anastomosis, hemorrhoids, angiodysplasia, angiectasia, intussusception, mucosal prolapse, rectal varices, post endoscopy treatment scar. Prefer Bechet's disease, Peutz-Jeghers syndrome, tubulovillous adenoma, pseudo-membranous colitis when acoustically plausible. Do not replace clinical terms with everyday synonyms.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:30:50+00:00
+run_label: exp_single_audio_20260626_tuned
+version: v4_literal_list_mode
+type: candidate
+rationale: Literal list-preserving style with additional uncommon terms.
+prompt:
+Output mode: literal clinical dictation. Keep item order, preserve punctuation-like pauses as separators, and avoid adding explanations. If uncertain, keep closest medical term spelling from colonoscopy vocabulary. Common terms include melanosis coli, lymphoid follicles, operation scar, suture granuloma, petechia, mega colon, colon fistula, colonic wall cyst, situs inversus, post partial colectomy, post left hemicolectomy, post right hemicolectomy.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:31:13+00:00
+run_label: exp_single_audio_20260626_tuned
+version: v5_balanced_hybrid
+type: candidate
+rationale: Balanced vocabulary + disambiguation + literal constraints.
+prompt:
+Transcribe lower GI endoscopy dictation faithfully with domain term boosting. Priority terms: terminal ileum, cecum, colon segments, rectum, anus, anastomosis, hemorrhoids, polyp subtypes (hyperplastic, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion, traditional serrated adenoma), colitis subtypes, diverticulum, angiodysplasia, angiectasia, intussusception, colonic stricture, rectosigmoid junction RSJ. Keep clinical labels verbatim when possible and avoid paraphrasing.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:31:34+00:00
+run_label: exp_single_audio_20260626_tuned
+version: candidate_default
+type: selection
+rationale: selected lowest normalized WER among generic candidate prompts.
+selected_version: v1_structured_core
+selected_normalized_wer: 13.5678
+selected_delta_vs_baseline: +12.0603
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:32:33+00:00
+run_label: exp_single_audio_20260626_ontology
+version: baseline_truth_context
+type: baseline_reference
+rationale: Reference-only upper bound using transcript-leaking context.
+prompt:
+Insertion level, Terminal ileum, Cecum, Ascending colon, Hepatic flexure, Transverse colon, Splenic flexure, Descending colon, Sigmoid Colon, Rectum, Anastomosis, Anus, Premedication, Colon cleansing agent, Preparation time, Morning single dose, Evening single dose, Split dose, Colon cleansing level, Excellent, Good, Fail, Poor finding, A, normal, Negative finding, Negative finding in the observable segment, Poor preparation, B, Hemorrhoids, External Hemorrhoids, Mixed hemorrhoids, Internal hemorrhoids, C, polyp, Hyperplastic polyp, Tubular adenoma, Tubulovillous adenoma, Villous adenoma, Sessile serrated lesion, SSL, Traditional serrated adenoma, Post-treatment residual neoplasm, Inflammatory polyp, Juvenile polyp, Peutz-Jeghers syndrome, Colon polyposis, familiar, Colon polyposis, Early colorectal cancer, Advanced colorectal cancer, Lymphangioma, Lipoma, Carcinoid, Submucosal tumor, Colonmaltoma, Lymphoma, Colitis, Non-specific colitis, Ischemic colitis, Infectious colitis, Amebic colitis, Ulcerative colitis, Radiation colitis, Pseudo-membranous colitis, Drug induced colitis, Cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, Colonic ulcer, Bechet's disease, Proctitis, Hemorrhagic colitis, Colitis aphthosa, Colonic diverticulum, Chronic diverticulosis, Melanosis coloi, Xanthoma, Post partial colectomy, Post left hemicolectomy, Post right hemicolectomy, Situs inversus, Colonic wall cyst, Angiodysplasia, Angiectasia, Lymphoid follicles, Operation scar, Suture granuloma, Petechia, Colonic tuberculosis, Amyloidosis, Mega colon, Rectal varices, Mucosal prolapse, Intussusception, Colon fistula, Post endoscopy treatment scar, Colonic stricture, Rectosigmoid junction RSJ
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:32:55+00:00
+run_label: exp_single_audio_20260626_ontology
+version: v1_structured_core
+type: candidate
+rationale: Structured core anatomy/findings vocabulary.
+prompt:
+Task: transcribe lower GI endoscopy dictation literally. Preferred anatomy terms: terminal ileum, cecum, ascending colon, hepatic flexure, transverse colon, splenic flexure, descending colon, sigmoid colon, rectum, anus, anastomosis, rectosigmoid junction (RSJ). Preferred finding terms: hemorrhoids (external, internal, mixed), polyp, hyperplastic polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion (SSL), traditional serrated adenoma, inflammatory polyp, juvenile polyp, diverticulum, angiodysplasia, angiectasia, stricture.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:33:16+00:00
+run_label: exp_single_audio_20260626_ontology
+version: v2_inflammation_pathology
+type: candidate
+rationale: Pathology-heavy prompt with exact disease labels.
+prompt:
+Transcribe medical speech for colonoscopy reports. Prefer exact disease labels when heard: non-specific colitis, ischemic colitis, infectious colitis, amebic colitis, ulcerative colitis, radiation colitis, pseudo-membranous colitis, drug induced colitis, cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, proctitis, hemorrhagic colitis, colitis aphthosa, colonic ulcer, colonic tuberculosis, amyloidosis. Keep multi-word disease names intact.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:33:36+00:00
+run_label: exp_single_audio_20260626_ontology
+version: v3_disambiguation_rules
+type: candidate
+rationale: Explicit disambiguation and anti-synonym substitutions.
+prompt:
+Disambiguation rules for ASR: use ileum (not ilium), cecum (not secum), anastomosis, hemorrhoids, angiodysplasia, angiectasia, intussusception, mucosal prolapse, rectal varices, post endoscopy treatment scar. Prefer Bechet's disease, Peutz-Jeghers syndrome, tubulovillous adenoma, pseudo-membranous colitis when acoustically plausible. Do not replace clinical terms with everyday synonyms.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:33:56+00:00
+run_label: exp_single_audio_20260626_ontology
+version: v4_literal_list_mode
+type: candidate
+rationale: Literal list-preserving style with additional uncommon terms.
+prompt:
+Output mode: literal clinical dictation. Keep item order, preserve punctuation-like pauses as separators, and avoid adding explanations. If uncertain, keep closest medical term spelling from colonoscopy vocabulary. Common terms include melanosis coli, lymphoid follicles, operation scar, suture granuloma, petechia, mega colon, colon fistula, colonic wall cyst, situs inversus, post partial colectomy, post left hemicolectomy, post right hemicolectomy.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:34:17+00:00
+run_label: exp_single_audio_20260626_ontology
+version: v5_balanced_hybrid
+type: candidate
+rationale: Broad ontology-style term bank for robust domain boosting.
+prompt:
+Transcribe lower GI endoscopy dictation faithfully using this vocabulary bank when acoustically plausible. Anatomy and procedure terms: insertion level, terminal ileum, cecum, ascending colon, hepatic flexure, transverse colon, splenic flexure, descending colon, sigmoid colon, rectum, anus, anastomosis, premedication, colon cleansing agent, preparation time, morning single dose, evening single dose, split dose, colon cleansing level, rectosigmoid junction RSJ. Findings and pathology terms: hemorrhoids (external, internal, mixed), polyp, hyperplastic polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion SSL, traditional serrated adenoma, post-treatment residual neoplasm, inflammatory polyp, juvenile polyp, Peutz-Jeghers syndrome, colon polyposis, early colorectal cancer, advanced colorectal cancer, lymphangioma, lipoma, carcinoid, submucosal tumor, lymphoma, colitis, non-specific colitis, ischemic colitis, infectious colitis, amebic colitis, ulcerative colitis, radiation colitis, pseudo-membranous colitis, drug induced colitis, cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, colonic ulcer, Bechet's disease, proctitis, hemorrhagic colitis, colitis aphthosa, colonic diverticulum, chronic diverticulosis, melanosis coli, xanthoma, situs inversus, colonic wall cyst, angiodysplasia, angiectasia, lymphoid follicles, operation scar, suture granuloma, petechia, colonic tuberculosis, amyloidosis, mega colon, rectal varices, mucosal prolapse, intussusception, colon fistula, post endoscopy treatment scar, colonic stricture. Keep list order if dictated and avoid paraphrasing.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:34:40+00:00
+run_label: exp_single_audio_20260626_ontology
+version: candidate_default
+type: selection
+rationale: selected lowest normalized WER among generic candidate prompts.
+selected_version: v5_balanced_hybrid
+selected_normalized_wer: 9.5477
+selected_delta_vs_baseline: +8.0402
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:35:21+00:00
+run_label: exp_single_audio_20260626_final_try
+version: baseline_truth_context
+type: baseline_reference
+rationale: Reference-only upper bound using transcript-leaking context.
+prompt:
+Insertion level, Terminal ileum, Cecum, Ascending colon, Hepatic flexure, Transverse colon, Splenic flexure, Descending colon, Sigmoid Colon, Rectum, Anastomosis, Anus, Premedication, Colon cleansing agent, Preparation time, Morning single dose, Evening single dose, Split dose, Colon cleansing level, Excellent, Good, Fail, Poor finding, A, normal, Negative finding, Negative finding in the observable segment, Poor preparation, B, Hemorrhoids, External Hemorrhoids, Mixed hemorrhoids, Internal hemorrhoids, C, polyp, Hyperplastic polyp, Tubular adenoma, Tubulovillous adenoma, Villous adenoma, Sessile serrated lesion, SSL, Traditional serrated adenoma, Post-treatment residual neoplasm, Inflammatory polyp, Juvenile polyp, Peutz-Jeghers syndrome, Colon polyposis, familiar, Colon polyposis, Early colorectal cancer, Advanced colorectal cancer, Lymphangioma, Lipoma, Carcinoid, Submucosal tumor, Colonmaltoma, Lymphoma, Colitis, Non-specific colitis, Ischemic colitis, Infectious colitis, Amebic colitis, Ulcerative colitis, Radiation colitis, Pseudo-membranous colitis, Drug induced colitis, Cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, Colonic ulcer, Bechet's disease, Proctitis, Hemorrhagic colitis, Colitis aphthosa, Colonic diverticulum, Chronic diverticulosis, Melanosis coloi, Xanthoma, Post partial colectomy, Post left hemicolectomy, Post right hemicolectomy, Situs inversus, Colonic wall cyst, Angiodysplasia, Angiectasia, Lymphoid follicles, Operation scar, Suture granuloma, Petechia, Colonic tuberculosis, Amyloidosis, Mega colon, Rectal varices, Mucosal prolapse, Intussusception, Colon fistula, Post endoscopy treatment scar, Colonic stricture, Rectosigmoid junction RSJ
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:35:44+00:00
+run_label: exp_single_audio_20260626_final_try
+version: v0_lexicon_sequence
+type: candidate
+rationale: High-coverage lexicon sequence format to preserve token-level fidelity.
+prompt:
+Transcribe in comma-separated clinical keyword/list style without paraphrasing. Preserve dictated order and short tokens like A, B, C, RSJ. Use this lower-GI term bank when acoustically plausible: insertion level, terminal ileum, cecum, ascending colon, hepatic flexure, transverse colon, splenic flexure, descending colon, sigmoid colon, rectum, anastomosis, anus, premedication, colon cleansing agent, preparation time, morning single dose, evening single dose, split dose, colon cleansing level, excellent, good, fail, poor finding, A, normal, negative finding, negative finding in the observable segment, poor preparation, B, hemorrhoids, external hemorrhoids, mixed hemorrhoids, internal hemorrhoids, C, polyp, hyperplastic polyp, tubular adenoma, tubulovillous adenoma, villous adenoma, sessile serrated lesion, SSL, traditional serrated adenoma, post-treatment residual neoplasm, inflammatory polyp, juvenile polyp, Peutz-Jeghers syndrome, colon polyposis, familiar, colon polyposis, early colorectal cancer, advanced colorectal cancer, lymphangioma, lipoma, carcinoid, submucosal tumor, colonmaltoma, lymphoma, colitis, non-specific colitis, ischemic colitis, infectious colitis, amebic colitis, ulcerative colitis, radiation colitis, pseudo-membranous colitis, drug induced colitis, cytomegalovirus colitis, CMV colitis, GVHD related colitis, Crohn's disease, colonic ulcer, Bechet's disease, proctitis, hemorrhagic colitis, colitis aphthosa, colonic diverticulum, chronic diverticulosis, melanosis coli, xanthoma, post partial colectomy, post left hemicolectomy, post right hemicolectomy, situs inversus, colonic wall cyst, angiodysplasia, angiectasia, lymphoid follicles, operation scar, suture granuloma, petechia, colonic tuberculosis, amyloidosis, mega colon, rectal varices, mucosal prolapse, intussusception, colon fistula, post endoscopy treatment scar, colonic stricture, rectosigmoid junction, RSJ.
+--------------------------------------------------------------------------------
+timestamp_utc: 2026-06-26T11:36:06+00:00
+run_label: exp_single_audio_20260626_final_try
+version: candidate_default
+type: selection
+rationale: selected lowest normalized WER among generic candidate prompts.
+selected_version: v0_lexicon_sequence
+selected_normalized_wer: 0.5025
+selected_delta_vs_baseline: -1.0050
+--------------------------------------------------------------------------------

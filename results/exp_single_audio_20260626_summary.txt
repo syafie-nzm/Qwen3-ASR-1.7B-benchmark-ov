@@ -1,0 +1,8 @@
+run_label: exp_single_audio_20260626
+baseline_normalized_wer: 1.5075
+best_version: v1_compact_terms
+best_normalized_wer: 14.0704
+delta_vs_baseline: +12.5628
+target_delta: +5.0000
+met_target: False
+executed_iterations: 5

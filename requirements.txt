@@ -1,0 +1,14 @@
+--extra-index-url https://download.pytorch.org/whl/xpu
+torch
+torchaudio
+transformers
+nncf
+openvino>=2025.4.0
+gradio>=4.0
+huggingface_hub<=1.0
+scipy
+qwen-asr
+numpy<2.4
+jiwer
+sounddevice
+silero_vad
