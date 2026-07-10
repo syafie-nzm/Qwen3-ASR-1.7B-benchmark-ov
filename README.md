@@ -1,40 +1,77 @@
-# Qwen3-ASR Speech Recognition with OpenVINO™
+# Qwen3-ASR-1.7B Benchmark (OpenVINO)
 
-The Qwen3-ASR family includes Qwen3-ASR-1.7B and Qwen3-ASR-0.6B, which support language identification and ASR for 52 languages and dialects. Both leverage large-scale speech training data and the strong audio understanding capability of their foundation model, Qwen3-Omni. Experiments show that the 1.7B version achieves state-of-the-art performance among open-source ASR models and is competitive with the strongest proprietary commercial APIs. Here are the main features:
+## Setup
 
-* **All-in-one**: Qwen3-ASR-1.7B and Qwen3-ASR-0.6B support language identification and speech recognition for 30 languages and 22 Chinese dialects, so as to English accents from multiple countries and regions.
+```bash
+uv sync
+```
 
-* **Excellent and Fast**: The Qwen3-ASR family ASR models maintains high-quality and robust recognition under complex acoustic environments and challenging text patterns. Qwen3-ASR-1.7B achieves strong performance on both open-sourced and internal benchmarks. While the 0.6B version achieves accuracy-efficient trade-off, it reaches 2000 times throughput at a concurrency of 128. They both achieve streaming / offline unified inference with single model and support transcribe long audio.
+## Benchmark
 
-* **Novel and strong forced alignment Solution**: We introduce Qwen3-ForcedAligner-0.6B, which supports timestamp prediction for arbitrary units within up to 5 minutes of speech in 11 languages. Evaluations show its timestamp accuracy surpasses E2E based forced-alignment models.
+1. Copy `.env.example` to `.env` and edit the values.
+2. Run:
 
-* **Comprehensive inference toolkit**: In addition to open-sourcing the architectures and weights of the Qwen3-ASR series, we also release a powerful, full-featured inference framework that supports vLLM-based batch inference, asynchronous serving, streaming inference, timestamp prediction, and more.
+```bash
+uv run qwen3_asr_benchmark.py
+```
 
-<p align="center">
-    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-ASR-Repo/overview.jpg" width="100%"/>
-<p>
+### Environment Variables
 
-More details can be found in the original [repository](https://github.com/QwenLM/Qwen3-ASR) and [model card](https://huggingface.co/Qwen/Qwen3-ASR-0.6B)
+| Variable | Description | Default |
+|---|---|---|
+| `QWEN_MODEL_ID` | HF model id or local source path for conversion | `Qwen/Qwen3-ASR-1.7B` |
+| `MODEL_PRECISION` | `int8` or `full_precision` (aliases: `full`, `fp16`, `unquantized`) | `int8` |
+| `DEVICE` | OpenVINO device: `CPU`, `GPU`, or `NPU` | `GPU` |
+| `SAMPLE_AUDIO` | Path to the audio file to transcribe | — |
+| `MODEL_OUTPUT_ROOT` | Base folder used to resolve the model directory | `./Qwen` |
+| `MODEL_DIR` | Explicit model directory; overrides `MODEL_OUTPUT_ROOT` when set | — |
+| `MAX_NEW_TOKENS` | Token generation limit | `512` |
 
-### Notebook Contents
+Model directory resolution:
 
-In this tutorial we consider how to run and optimize Qwen3-ASR using OpenVINO.
+- If the target directory does not exist, the model is converted automatically at the requested precision.
+- If the directory already contains `config.json`, it is used as-is.
+- If the directory exists but looks incomplete, the script stops — remove it or point `MODEL_DIR` elsewhere.
 
-The tutorial consists of the following steps:
+## Streaming ASR
 
-- Install prerequisites
-- Convert model to OpenVINO intermediate representation (IR) format 
-- Prepare OpenVINO Inference pipeline
-- Run Speech Recognition
-- Launch interactive demo
+Two script variants are available:
 
-## Installation Instructions
+| Script | Behaviour |
+|---|---|
+| `qwen3_stream_vad_no_context.py` | Each utterance is transcribed without context or input prompt |
+| `qwen3_stream_vad_with_context.py` | Each utterance is transcribed with context or input prompt |
 
-This is a self-contained example that relies solely on its own code.</br>
-We recommend running the notebook in a virtual environment. You only need a Jupyter server to start.
-For further details, please refer to [Installation Guide](../../README.md).
+### Local machine (microphone attached)
 
-⚠️ **EXPERIMENTAL NOTEBOOK**
+Run directly on the machine that has the microphone:
 
-This notebook demonstrates a model that has not been fully validated with OpenVINO. It may be fully supported and validated in the future.
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=5b5a4db0-7875-4bfb-bdbd-01698b5b1a77&file=notebooks/qwen3-asr/README.md" />
+```bash
+# without context
+uv run qwen3_stream_vad_no_context.py --mode mic
+
+# with context
+uv run qwen3_stream_vad_with_context.py --mode mic
+```
+
+### Remote server (headless / SSH)
+
+When the model runs on a remote server without a microphone, start the script in server mode on the remote machine first, then run `stream_client.py` on your local machine to stream microphone audio over TCP.
+
+**Step 1 — on the remote server:**
+
+```bash
+# without context
+uv run qwen3_stream_vad_no_context.py --mode server --host 0.0.0.0 --port 9876
+
+# with context
+uv run qwen3_stream_vad_with_context.py --mode server --host 0.0.0.0 --port 9876
+```
+
+**Step 2 — on your local machine:**
+
+```bash
+pip install sounddevice numpy
+
+python stream_client.py --host <remote-server-ip> --port 9876
+```

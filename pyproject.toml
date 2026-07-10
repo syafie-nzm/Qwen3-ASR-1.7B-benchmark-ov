@@ -1,0 +1,21 @@
+[project]
+name = "qwen3-asr-1-7b-benchmark-ov"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jiwer>=4.0.0",
+    "nncf>=3.2.0",
+    "openvino>=2026.2.1",
+    "python-dotenv>=1.1.1",
+    "qwen-asr>=0.0.6",
+    "silero-vad>=6.2.1",
+    "sounddevice>=0.5.5",
+]
+
+[[tool.uv.index]]
+# Optional name for the index.
+name = "pytorch"
+# Required URL for the index.
+url = "https://download.pytorch.org/whl/xpu"
