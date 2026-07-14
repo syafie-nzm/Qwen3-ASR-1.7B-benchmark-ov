@@ -90,12 +90,16 @@ def transcribe_worker() -> None:
             break
 
         try:
+            start = time.perf_counter()
             # Qwen3-ASR transcribe API: expects (numpy_array, sample_rate) tuple
             results = asr_model.transcribe(
                 audio=(audio_np, SAMPLE_RATE),
                 language="English",  # auto-detect language
                 context=context,
             )
+            end = time.perf_counter()
+            time_taken = end - start
+
             text = results[0].text.strip()
             language = results[0].language
             
@@ -116,6 +120,7 @@ def transcribe_worker() -> None:
                 # Only print if there's actual transcribed text remaining
                 if text:
                     print(f"\n>>> [{language}] {text}", flush=True)
+                    print(f"Time taken: {time_taken*1000:.2f} ms", flush=True)
         except Exception as e:
             print(f"\n[ERROR] Transcription failed: {e}", file=sys.stderr, flush=True)
 

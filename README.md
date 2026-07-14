@@ -1,5 +1,24 @@
 # Qwen3-ASR-1.7B Benchmark (OpenVINO)
 
+## Prerequisites
+
+- Python 3.10+ installed
+- `uv` installed
+
+Install `uv` using the official guide:
+
+- https://docs.astral.sh/uv/getting-started/installation/
+
+Quick install examples:
+
+```bash
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
 ## Setup
 
 ```bash
