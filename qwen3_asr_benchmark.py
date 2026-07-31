@@ -19,6 +19,7 @@ DEFAULT_SAMPLE_AUDIO = "./endoscopy_internal.wav"
 DEFAULT_MAX_NEW_TOKENS = 512
 DEFAULT_OUTPUT_ROOT = "./Qwen"
 INT8_DIR_SUFFIX = "-OV"
+INT4_DIR_SUFFIX = "-OV-int4"
 FULL_PRECISION_DIR_SUFFIX = "-OV-full-precision"
 
 
@@ -55,7 +56,9 @@ def normalize_precision(raw_precision: str) -> str:
         return "int8"
     if normalized in {"full_precision", "full", "fp16", "fp32", "unquantized"}:
         return "full_precision"
-    raise ValueError("Unsupported MODEL_PRECISION. Use int8 or full_precision.")
+    if normalized in {"int4"}:
+        return "int4"
+    raise ValueError("Unsupported MODEL_PRECISION. Use int8, int4, or full_precision.")
 
 
 def resolve_model_dir(model_id: str, model_precision: str) -> Path:
@@ -65,7 +68,7 @@ def resolve_model_dir(model_id: str, model_precision: str) -> Path:
 
     output_root = resolve_path(get_env("MODEL_OUTPUT_ROOT", DEFAULT_OUTPUT_ROOT))
     model_name = model_id.rstrip("/").split("/")[-1]
-    suffix = INT8_DIR_SUFFIX if model_precision == "int8" else FULL_PRECISION_DIR_SUFFIX
+    suffix = INT8_DIR_SUFFIX if model_precision == "int8" else INT4_DIR_SUFFIX if model_precision == "int4" else FULL_PRECISION_DIR_SUFFIX
     return output_root / f"{model_name}{suffix}"
 
 
@@ -82,6 +85,9 @@ def ensure_model(model_id: str, model_dir: Path, model_precision: str) -> None:
     quantization_config = None
     if model_precision == "int8":
         quantization_config = {"mode": CompressWeightsMode.INT8_SYM}
+
+    elif model_precision == "int4":
+        quantization_config = {"mode": CompressWeightsMode.INT4_ASYM}
 
     print(f"Converting {model_id} to {model_dir} ({model_precision})...")
     convert_qwen3_asr_model(
