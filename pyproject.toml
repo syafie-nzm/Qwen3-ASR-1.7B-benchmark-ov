@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "jiwer>=4.0.0",
+    "matplotlib>=3.9",
     "nncf>=3.2.0",
     "openvino>=2026.2.1",
     "python-dotenv>=1.1.1",
