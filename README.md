@@ -52,6 +52,99 @@ Model directory resolution:
 - If the directory already contains `config.json`, it is used as-is.
 - If the directory exists but looks incomplete, the script stops — remove it or point `MODEL_DIR` elsewhere.
 
+## Chunk-Based Latency Benchmark
+
+This repository also includes a chunk-based latency benchmark for measuring
+Qwen3-ASR on reusable audio slices. It is a TTFT-style workflow, but the
+current implementation measures per-chunk transcription latency rather than
+literal token-level first-token timing.
+
+Recommended flow:
+
+1. Split a source audio file into chunks.
+2. Benchmark the resulting chunk directory.
+3. Compare the generated CSV and summary files across devices or precisions.
+
+### 1) Chunk creation
+
+You can create chunks in two ways.
+
+#### Fixed chunking
+
+Use this when you want blind, equal-ish splits with no speech detection.
+
+```bash
+# split into a fixed number of chunks
+uv run chunk_audio.py --audio ./endoscopy_internal.wav --num-chunks 100 --output-dir ./chunks
+
+# split by fixed chunk length in seconds
+uv run chunk_audio.py --audio ./endoscopy_internal.wav --chunk-seconds 5 --output-dir ./chunks
+```
+
+`chunk_audio.py` writes WAV chunks named like `*_chunk001.wav`, `*_chunk002.wav`, and so on.
+
+#### VAD chunking
+
+Use this when you want speech-only chunks. This is the recommended path for
+benchmarking because it removes silence and produces reusable chunks for fair
+comparisons across devices and precisions.
+
+```bash
+uv run chunk_audio_vad.py --audio ./endoscopy_internal.wav --output-dir ./chunks_vad --manifest
+```
+
+Useful tuning flags:
+
+| Flag | Description |
+|---|---|
+| `--threshold` | Speech probability threshold used by Silero VAD |
+| `--min-silence-ms` | Silence duration that ends a speech segment |
+| `--speech-pad-ms` | Padding added to the start and end of each detected segment |
+| `--min-speech-ms` | Short speech segments Silero keeps before chunk post-processing |
+| `--min-chunk-seconds` | Short chunks are merged into the previous chunk or dropped |
+| `--max-chunk-seconds` | Long chunks are split into near-equal parts |
+| `--limit` | Optional cap on the number of chunks written |
+| `--manifest` | Also write `segments.csv` with chunk timestamps |
+
+`chunk_audio_vad.py` resamples audio to 16 kHz mono and writes 16 kHz mono PCM_16 WAV chunks into `./chunks_vad` by default.
+
+### 2) Run the chunk benchmark
+
+After chunking, benchmark the chunk directory with:
+
+```bash
+uv run qwen3_asr_benchmark_chunks.py --chunks-dir ./chunks_vad --warmup 1
+```
+
+Common command-line options:
+
+| Option | Description |
+|---|---|
+| `--chunks-dir` | Directory containing chunked audio files |
+| `--pattern` | Glob pattern used to select chunk files, for example `*.wav` |
+| `--limit` | Only benchmark the first N chunks |
+| `--warmup` | Number of warmup transcriptions to discard before timing starts |
+| `--run-label` | Name used for the output files |
+| `--output-dir` | Directory where benchmark results are written |
+
+The benchmark script also accepts env-backed inputs such as `CHUNKS_DIR`,
+`WARMUP_RUNS`, and `EXPERIMENT_NAME`.
+
+### 3) Metrics and outputs
+
+The chunk benchmark records per-chunk transcription latency in `time_taken_sec`,
+plus chunk duration statistics, RTF, detected language, prediction text, and
+concatenated WER over the full run.
+
+Outputs are written under `./results/` by default:
+
+| File | Description |
+|---|---|
+| `{run_label}_chunks.csv` | Per-chunk timing and prediction details |
+| `{run_label}_chunks_summary.txt` | Aggregate summary including duration stats, RTF, and WER |
+
+If you want to inspect the latency distribution after a run, `plot_time_distribution.py` can plot the `time_taken_sec` column from the generated CSV.
+
 ## Streaming ASR
 
 Two script variants are available:

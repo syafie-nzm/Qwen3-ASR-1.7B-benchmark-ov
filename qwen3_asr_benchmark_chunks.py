@@ -23,13 +23,13 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 DEFAULT_MODEL_ID = "Qwen/Qwen3-ASR-1.7B"
 DEFAULT_DEVICE = "GPU"
 DEFAULT_PRECISION = "int8"
-DEFAULT_CHUNKS_DIR = "./chunks"
+DEFAULT_CHUNKS_DIR = "./chunks_vad"
 DEFAULT_CHUNK_PATTERN = "*.wav"
 DEFAULT_MAX_NEW_TOKENS = 512
 DEFAULT_OUTPUT_ROOT = "./Qwen"
 DEFAULT_RESULTS_DIR = "./results"
 DEFAULT_WARMUP_RUNS = 1
-INT8_DIR_SUFFIX = "-OV"
+INT8_DIR_SUFFIX = "-OV-int8"
 INT4_DIR_SUFFIX = "-OV-int4"
 FULL_PRECISION_DIR_SUFFIX = "-OV-full-precision"
 
@@ -302,7 +302,7 @@ def main() -> None:
     for warmup_index in range(args.warmup):
         print(f"Warmup {warmup_index + 1}/{args.warmup} on {chunk_paths[0].name}...")
         ov_model.transcribe(audio=str(chunk_paths[0]), language=None, 
-        context=REFERENCE
+        # context=REFERENCE
         )
 
     times: List[float] = []
@@ -319,7 +319,7 @@ def main() -> None:
             results = ov_model.transcribe(
                 audio=str(chunk_path),
                 language=None,
-                context=REFERENCE,
+                # context=REFERENCE,
             )
             end = time.perf_counter()
 
